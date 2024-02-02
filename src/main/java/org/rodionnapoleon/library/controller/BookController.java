@@ -1,8 +1,8 @@
 package org.rodionnapoleon.library.controller;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.rodionnapoleon.library.model.Book;
 import org.rodionnapoleon.library.repository.BookRepository;
+import org.rodionnapoleon.library.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +13,12 @@ import java.util.Optional;
 public class BookController {
 
     private final BookRepository bookRepository;
+    private final BookService bookService;
 
 
-    public BookController(BookRepository bookRepository) {
+    public BookController(BookRepository bookRepository, BookService bookService) {
         this.bookRepository = bookRepository;
+        this.bookService = bookService;
     }
 
     @GetMapping
@@ -32,26 +34,18 @@ public class BookController {
 
     @GetMapping("/{id}")
     public Optional<Book> getById(@PathVariable Long id) {
-        return bookRepository.findById(id);
+        return bookService.findById(id);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
-        bookRepository.deleteById(id);
+        bookService.deleteById(id);
     }
 
     @PutMapping("/{id}")
     public Book updateById(@PathVariable Long id, @RequestBody Book updatedBook) {
-        Book existingBook = bookRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Book not found with id " + id));
-
-        existingBook.setAuthor(updatedBook.getAuthor());
-        existingBook.setBookName(updatedBook.getBookName());
-        existingBook.setYearOfPublishing(updatedBook.getYearOfPublishing());
-        existingBook.setCost(updatedBook.getCost());
-
-        return bookRepository.save(existingBook);
+        return bookService.updateById(id, updatedBook);
     }
 
 }
