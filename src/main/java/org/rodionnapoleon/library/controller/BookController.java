@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/api/book")
 public class BookController {
 
     private final BookRepository bookRepository;
@@ -28,8 +28,8 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Book create(@RequestBody Book book) {
-        return bookRepository.save(book);
+    public Book create(@RequestBody Book book)  {
+        return bookService.save(book);
     }
 
     @GetMapping("/{id}")
@@ -42,6 +42,7 @@ public class BookController {
     public void deleteById(@PathVariable Long id) {
         bookService.deleteById(id);
     }
+
 
     @PutMapping("/{id}")
     public Book updateById(@PathVariable Long id, @RequestBody Book updatedBook) {

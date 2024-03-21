@@ -8,10 +8,10 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.Year;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 public class Book {
 
