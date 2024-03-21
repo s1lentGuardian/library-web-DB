@@ -38,4 +38,8 @@ public class BookService {
         existingBook.setCost(updatedBook.getCost());
         return bookRepository.save(existingBook);
     }
+
+    public Book save(Book book) {
+        return bookRepository.save(book);
+    }
 }
