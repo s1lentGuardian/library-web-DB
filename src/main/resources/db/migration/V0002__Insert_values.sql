@@ -1,0 +1,1 @@
+INSERT INTO book (author, book_name, year_of_publishing, cost) VALUES ('Andrzej Sapkowski', 'The Last Wish', 1993, 99);
